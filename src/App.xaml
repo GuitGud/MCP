@@ -1,0 +1,509 @@
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Master Control Program"
+        Width="1440" Height="900" MinWidth="1120" MinHeight="700"
+        WindowStartupLocation="CenterScreen" WindowStyle="None"
+        ResizeMode="CanResizeWithGrip" Background="#060608"
+        FontFamily="Segoe UI" UseLayoutRounding="True">
+    <Window.Resources>
+        <Color x:Key="AccentColor">#FF2B35</Color>
+        <Color x:Key="AccentDimColor">#441219</Color>
+        <Color x:Key="AccentSoftColor">#221014</Color>
+        <SolidColorBrush x:Key="AccentBrush" Color="{DynamicResource AccentColor}"/>
+        <SolidColorBrush x:Key="AccentDimBrush" Color="{DynamicResource AccentDimColor}"/>
+        <SolidColorBrush x:Key="AccentSoftBrush" Color="{DynamicResource AccentSoftColor}"/>
+        <SolidColorBrush x:Key="BackgroundBrush" Color="#060608"/>
+        <SolidColorBrush x:Key="PanelBrush" Color="#0D0D10"/>
+        <SolidColorBrush x:Key="SurfaceBrush" Color="#141419"/>
+        <SolidColorBrush x:Key="SurfaceHoverBrush" Color="#1D1D23"/>
+        <SolidColorBrush x:Key="BorderBrush" Color="#27272F"/>
+        <SolidColorBrush x:Key="TextBrush" Color="#F3F3F5"/>
+        <SolidColorBrush x:Key="MutedBrush" Color="#858590"/>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+        </Style>
+
+        <Style x:Key="Heading" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Bahnschrift, Segoe UI"/>
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+        </Style>
+
+        <Style x:Key="Eyebrow" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Consolas"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Foreground" Value="{DynamicResource AccentBrush}"/>
+        </Style>
+
+        <Style x:Key="Panel" TargetType="Border">
+            <Setter Property="Background" Value="{DynamicResource PanelBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="3"/>
+        </Style>
+
+        <Style x:Key="ActionButton" TargetType="Button">
+            <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+            <Setter Property="Background" Value="{DynamicResource SurfaceBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="14,8"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="ButtonBorder" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="2" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ButtonBorder" Property="BorderBrush" Value="{DynamicResource AccentBrush}"/>
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource AccentSoftBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource AccentDimBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.35"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="AccentButton" TargetType="Button" BasedOn="{StaticResource ActionButton}">
+            <Setter Property="Background" Value="{DynamicResource AccentBrush}"/>
+            <Setter Property="Foreground" Value="#08080A"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+
+        <Style x:Key="ChromeButton" TargetType="Button" BasedOn="{StaticResource ActionButton}">
+            <Setter Property="Width" Value="44"/>
+            <Setter Property="Height" Value="34"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+        </Style>
+
+        <Style x:Key="NavButton" TargetType="RadioButton">
+            <Setter Property="Foreground" Value="{DynamicResource MutedBrush}"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Padding" Value="18,13"/>
+            <Setter Property="Margin" Value="0,2"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border x:Name="NavBorder" Background="{TemplateBinding Background}"
+                                BorderBrush="Transparent" BorderThickness="2,0,0,0" CornerRadius="0,2,2,0"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="NavBorder" Property="Background" Value="{DynamicResource SurfaceBrush}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="NavBorder" Property="Background" Value="{DynamicResource AccentSoftBrush}"/>
+                                <Setter TargetName="NavBorder" Property="BorderBrush" Value="{DynamicResource AccentBrush}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource AccentBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="Input" TargetType="TextBox">
+            <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+            <Setter Property="Background" Value="#09090C"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
+            <Setter Property="CaretBrush" Value="{DynamicResource AccentBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="11,8"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+
+        <Style TargetType="DataGrid">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="GridLinesVisibility" Value="Horizontal"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="#202027"/>
+            <Setter Property="HeadersVisibility" Value="Column"/>
+            <Setter Property="RowBackground" Value="Transparent"/>
+            <Setter Property="AlternatingRowBackground" Value="#09090C"/>
+            <Setter Property="SelectionMode" Value="Single"/>
+            <Setter Property="SelectionUnit" Value="FullRow"/>
+            <Setter Property="AutoGenerateColumns" Value="False"/>
+            <Setter Property="CanUserAddRows" Value="False"/>
+            <Setter Property="CanUserDeleteRows" Value="False"/>
+            <Setter Property="CanUserResizeRows" Value="False"/>
+            <Setter Property="RowHeaderWidth" Value="0"/>
+            <Setter Property="RowHeight" Value="38"/>
+        </Style>
+
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#101014"/>
+            <Setter Property="Foreground" Value="{DynamicResource MutedBrush}"/>
+            <Setter Property="BorderBrush" Value="#292930"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+
+        <Style TargetType="DataGridCell">
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="10,4"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource AccentDimBrush}"/>
+                    <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="TreeView">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+
+        <Style TargetType="TreeViewItem">
+            <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+            <Setter Property="Padding" Value="2,5"/>
+            <Setter Property="IsExpanded" Value="False"/>
+        </Style>
+
+        <Style TargetType="ScrollBar">
+            <Setter Property="Background" Value="#0A0A0D"/>
+            <Setter Property="Width" Value="9"/>
+        </Style>
+    </Window.Resources>
+
+    <Border x:Name="OuterFrame" BorderBrush="{DynamicResource AccentDimBrush}" BorderThickness="1" Background="{DynamicResource BackgroundBrush}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="54"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="26"/>
+            </Grid.RowDefinitions>
+
+            <!-- custom title bar -->
+            <Border x:Name="TitleBar" Grid.Row="0" Background="#09090C" BorderBrush="#24242B" BorderThickness="0,0,0,1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="220"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="18,0,0,0" VerticalAlignment="Center">
+                        <Border x:Name="LogoMark" Width="26" Height="26" BorderBrush="{DynamicResource AccentBrush}" BorderThickness="1" CornerRadius="13">
+                            <TextBlock Text="M" Foreground="{DynamicResource AccentBrush}" FontFamily="Bahnschrift" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <StackPanel Margin="10,0,0,0" VerticalAlignment="Center">
+                            <TextBlock Text="MASTER CONTROL" FontFamily="Bahnschrift" FontSize="12" FontWeight="SemiBold"/>
+                            <TextBlock Text="PROGRAM // WINDOWS" FontFamily="Consolas" FontSize="8" Foreground="{DynamicResource MutedBrush}"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <TextBlock Grid.Column="1" x:Name="TitleContext" Text="SYSTEM OVERVIEW" FontFamily="Consolas" FontSize="10" Foreground="{DynamicResource MutedBrush}" VerticalAlignment="Center"/>
+
+                    <Border Grid.Column="2" x:Name="SteamModeContainer" Visibility="Collapsed" Margin="0,9,12,9" Padding="11,0" Background="#0D0D12" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="14">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <TextBlock Text="STEAM MODE" FontFamily="Consolas" FontSize="9" VerticalAlignment="Center" Margin="0,0,9,0"/>
+                            <ToggleButton x:Name="SteamModeToggle" Width="36" Height="18" Cursor="Hand">
+                                <ToggleButton.Template>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border x:Name="Track" Background="#2A2A31" CornerRadius="9" BorderBrush="#44444D" BorderThickness="1">
+                                            <Ellipse x:Name="Thumb" Width="12" Height="12" Fill="#AAAAAF" HorizontalAlignment="Left" Margin="2"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Setter TargetName="Track" Property="Background" Value="{DynamicResource AccentDimBrush}"/>
+                                                <Setter TargetName="Track" Property="BorderBrush" Value="{DynamicResource AccentBrush}"/>
+                                                <Setter TargetName="Thumb" Property="Fill" Value="{DynamicResource AccentBrush}"/>
+                                                <Setter TargetName="Thumb" Property="HorizontalAlignment" Value="Right"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                            </ToggleButton>
+                        </StackPanel>
+                    </Border>
+
+                    <StackPanel Grid.Column="3" Orientation="Horizontal">
+                        <Button x:Name="MinimizeButton" Style="{StaticResource ChromeButton}" Content="&#xE921;"/>
+                        <Button x:Name="MaximizeButton" Style="{StaticResource ChromeButton}" Content="&#xE922;"/>
+                        <Button x:Name="CloseButton" Style="{StaticResource ChromeButton}" Content="&#xE8BB;" Foreground="{DynamicResource AccentBrush}"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="220"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- navigation -->
+                <Border Grid.Column="0" Background="#09090C" BorderBrush="#24242B" BorderThickness="0,0,1,0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="CONTROL DECK" Style="{StaticResource Eyebrow}" Margin="20,23,10,13"/>
+                        <StackPanel Grid.Row="1">
+                            <RadioButton x:Name="OverviewNav" Style="{StaticResource NavButton}" IsChecked="True">
+                                <StackPanel Orientation="Horizontal"><TextBlock Text="&#xE80F;" FontFamily="Segoe MDL2 Assets" FontSize="15" Margin="0,0,13,0"/><TextBlock Text="Overview"/></StackPanel>
+                            </RadioButton>
+                            <RadioButton x:Name="FilesNav" Style="{StaticResource NavButton}">
+                                <StackPanel Orientation="Horizontal"><TextBlock Text="&#xE8B7;" FontFamily="Segoe MDL2 Assets" FontSize="15" Margin="0,0,13,0"/><TextBlock Text="File Tree"/></StackPanel>
+                            </RadioButton>
+                            <RadioButton x:Name="ProcessesNav" Style="{StaticResource NavButton}">
+                                <StackPanel Orientation="Horizontal"><TextBlock Text="&#xE9D9;" FontFamily="Segoe MDL2 Assets" FontSize="15" Margin="0,0,13,0"/><TextBlock Text="Processes"/></StackPanel>
+                            </RadioButton>
+                            <RadioButton x:Name="SteamNav" Style="{StaticResource NavButton}" Visibility="Collapsed">
+                                <StackPanel Orientation="Horizontal"><TextBlock Text="&#xE7FC;" FontFamily="Segoe MDL2 Assets" FontSize="15" Margin="0,0,13,0"/><TextBlock Text="Steam Library"/></StackPanel>
+                            </RadioButton>
+                        </StackPanel>
+                        <StackPanel Grid.Row="2" Margin="18,14,14,18">
+                            <Border BorderBrush="{DynamicResource AccentDimBrush}" BorderThickness="1,0,0,0" Padding="10,2">
+                                <StackPanel>
+                                    <TextBlock Text="SYSTEM LINK" FontFamily="Consolas" FontSize="8" Foreground="{DynamicResource MutedBrush}"/>
+                                    <TextBlock x:Name="ComputerNameText" Text="LOCALHOST" FontFamily="Consolas" FontSize="10" Margin="0,3,0,0"/>
+                                    <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                                        <Ellipse Width="5" Height="5" Fill="#4DFF88" Margin="0,0,6,0"/>
+                                        <TextBlock Text="ONLINE" FontFamily="Consolas" FontSize="8" Foreground="#4DFF88"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- page host -->
+                <Grid Grid.Column="1" Margin="26,22,26,18">
+                    <Grid x:Name="OverviewPage">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+                            <TextBlock Text="SYSTEM // 01" Style="{StaticResource Eyebrow}"/>
+                            <TextBlock Text="System overview" Style="{StaticResource Heading}" Margin="0,4,0,0"/>
+                            <TextBlock Text="A clean read on the machine. No hunting through Windows menus." Foreground="{DynamicResource MutedBrush}" FontSize="13" Margin="0,7,0,0"/>
+                        </StackPanel>
+
+                        <UniformGrid Grid.Row="1" Columns="4" Margin="0,0,0,18">
+                            <Border Style="{StaticResource Panel}" Margin="0,0,10,0" Padding="18,16">
+                                <StackPanel><TextBlock Text="RUNNING PROCESSES" Style="{StaticResource Eyebrow}"/><TextBlock x:Name="ProcessCountText" Text="—" FontFamily="Bahnschrift" FontSize="30" Margin="0,8,0,0"/><TextBlock Text="live system tasks" Foreground="{DynamicResource MutedBrush}" FontSize="11"/></StackPanel>
+                            </Border>
+                            <Border Style="{StaticResource Panel}" Margin="4,0,7,0" Padding="18,16">
+                                <StackPanel><TextBlock Text="MEMORY IN USE" Style="{StaticResource Eyebrow}"/><TextBlock x:Name="MemoryUsedText" Text="—" FontFamily="Bahnschrift" FontSize="30" Margin="0,8,0,0"/><TextBlock Text="across processes" Foreground="{DynamicResource MutedBrush}" FontSize="11"/></StackPanel>
+                            </Border>
+                            <Border Style="{StaticResource Panel}" Margin="7,0,4,0" Padding="18,16">
+                                <StackPanel><TextBlock Text="STORAGE VOLUMES" Style="{StaticResource Eyebrow}"/><TextBlock x:Name="DriveCountText" Text="—" FontFamily="Bahnschrift" FontSize="30" Margin="0,8,0,0"/><TextBlock Text="ready and mounted" Foreground="{DynamicResource MutedBrush}" FontSize="11"/></StackPanel>
+                            </Border>
+                            <Border Style="{StaticResource Panel}" Margin="10,0,0,0" Padding="18,16">
+                                <StackPanel><TextBlock Text="STEAM GAMES" Style="{StaticResource Eyebrow}"/><TextBlock x:Name="SteamGameCountText" Text="—" FontFamily="Bahnschrift" FontSize="30" Margin="0,8,0,0"/><TextBlock x:Name="SteamStatusText" Text="scanning local client" Foreground="{DynamicResource MutedBrush}" FontSize="11"/></StackPanel>
+                            </Border>
+                        </UniformGrid>
+
+                        <Grid Grid.Row="2">
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="1.65*"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                            <Border Grid.Column="0" Style="{StaticResource Panel}" Margin="0,0,9,0" Padding="18">
+                                <Grid>
+                                    <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+                                    <Grid Grid.Row="0" Margin="0,0,0,15">
+                                        <TextBlock Text="STORAGE ARRAY" FontFamily="Bahnschrift" FontSize="15" FontWeight="SemiBold"/>
+                                        <Button x:Name="RefreshOverviewButton" Content="REFRESH" Style="{StaticResource ActionButton}" HorizontalAlignment="Right" Padding="12,5"/>
+                                    </Grid>
+                                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                                        <ItemsControl x:Name="DriveList">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Border Background="#0A0A0D" BorderBrush="#222229" BorderThickness="1" CornerRadius="2" Padding="14,12" Margin="0,0,0,9">
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions><ColumnDefinition Width="54"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                                                            <Border Grid.Column="0" Width="38" Height="38" BorderBrush="{DynamicResource AccentDimBrush}" BorderThickness="1" CornerRadius="2" HorizontalAlignment="Left">
+                                                                <TextBlock Text="{Binding Name}" Foreground="{DynamicResource AccentBrush}" FontFamily="Consolas" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                            </Border>
+                                                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                                                <TextBlock Text="{Binding Label}" Foreground="{DynamicResource TextBrush}" FontSize="13"/>
+                                                                <Grid Height="4" Margin="0,7,18,0" Background="#222229">
+                                                                    <ProgressBar Value="{Binding UsedPct}" Maximum="100" Foreground="{DynamicResource AccentBrush}" Background="Transparent" BorderThickness="0"/>
+                                                                </Grid>
+                                                            </StackPanel>
+                                                            <StackPanel Grid.Column="2" VerticalAlignment="Center">
+                                                                <TextBlock Text="{Binding UsedPct, StringFormat={}{0}% used}" Foreground="{DynamicResource TextBrush}" FontFamily="Consolas" FontSize="11" HorizontalAlignment="Right"/>
+                                                                <TextBlock Text="{Binding FreeText, StringFormat={}{0} free}" Foreground="{DynamicResource MutedBrush}" FontSize="10" HorizontalAlignment="Right" Margin="0,4,0,0"/>
+                                                            </StackPanel>
+                                                        </Grid>
+                                                    </Border>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </ScrollViewer>
+                                </Grid>
+                            </Border>
+                            <Border Grid.Column="1" Style="{StaticResource Panel}" Margin="9,0,0,0" Padding="19">
+                                <StackPanel>
+                                    <TextBlock Text="QUICK ROUTES" FontFamily="Bahnschrift" FontSize="15" FontWeight="SemiBold"/>
+                                    <TextBlock Text="Jump directly to familiar locations." Foreground="{DynamicResource MutedBrush}" FontSize="11" Margin="0,5,0,16"/>
+                                    <Button x:Name="DesktopQuickButton" Style="{StaticResource ActionButton}" Margin="0,0,0,8" HorizontalContentAlignment="Left" Content="  DESKTOP"/>
+                                    <Button x:Name="DocumentsQuickButton" Style="{StaticResource ActionButton}" Margin="0,0,0,8" HorizontalContentAlignment="Left" Content="  DOCUMENTS"/>
+                                    <Button x:Name="DownloadsQuickButton" Style="{StaticResource ActionButton}" Margin="0,0,0,8" HorizontalContentAlignment="Left" Content="  DOWNLOADS"/>
+                                    <Button x:Name="SteamQuickButton" Style="{StaticResource ActionButton}" Margin="0,0,0,8" HorizontalContentAlignment="Left" Content="  STEAM ROOT" Visibility="Collapsed"/>
+                                    <Border Background="{DynamicResource AccentSoftBrush}" BorderBrush="{DynamicResource AccentDimBrush}" BorderThickness="1" Padding="13" Margin="0,12,0,0">
+                                        <StackPanel><TextBlock Text="MCP SAFETY" Style="{StaticResource Eyebrow}"/><TextBlock Text="End-task actions require confirmation. Deleted files are sent to the Recycle Bin." TextWrapping="Wrap" Foreground="{DynamicResource MutedBrush}" FontSize="11" Margin="0,7,0,0"/></StackPanel>
+                                    </Border>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </Grid>
+
+                    <!-- files page -->
+                    <Grid x:Name="FilesPage" Visibility="Collapsed">
+                        <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Margin="0,0,0,16">
+                            <StackPanel><TextBlock Text="FILES // 02" Style="{StaticResource Eyebrow}"/><TextBlock Text="File tree" Style="{StaticResource Heading}" Margin="0,4,0,0"/></StackPanel>
+                            <TextBox x:Name="FileSearchBox" Style="{StaticResource Input}" Width="260" Height="34" HorizontalAlignment="Right" VerticalAlignment="Bottom" ToolTip="Filter this folder"/>
+                        </Grid>
+                        <Grid Grid.Row="1" Margin="0,0,0,10">
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                <Button x:Name="FileBackButton" Style="{StaticResource ActionButton}" Content="←" Width="38" Padding="0" Margin="0,0,6,0"/>
+                                <Button x:Name="FileUpButton" Style="{StaticResource ActionButton}" Content="↑" Width="38" Padding="0" Margin="0,0,8,0"/>
+                            </StackPanel>
+                            <TextBox x:Name="PathBox" Grid.Column="1" Style="{StaticResource Input}" VerticalContentAlignment="Center"/>
+                            <Button x:Name="PathGoButton" Grid.Column="2" Style="{StaticResource AccentButton}" Content="GO" Width="54" Margin="8,0,0,0"/>
+                        </Grid>
+                        <Grid Grid.Row="2">
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="260"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                            <Border Grid.Column="0" Style="{StaticResource Panel}" Margin="0,0,9,0" Padding="8">
+                                <TreeView x:Name="FileTree"/>
+                            </Border>
+                            <Border Grid.Column="1" Style="{StaticResource Panel}" Margin="9,0,0,0">
+                                <DataGrid x:Name="FileGrid" IsReadOnly="True" AlternationCount="2">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="NAME" Binding="{Binding Name}" Width="2.4*"/>
+                                        <DataGridTextColumn Header="TYPE" Binding="{Binding Type}" Width="1.1*"/>
+                                        <DataGridTextColumn Header="SIZE" Binding="{Binding Size}" Width="0.8*"/>
+                                        <DataGridTextColumn Header="MODIFIED" Binding="{Binding Modified}" Width="1.2*"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Border>
+                        </Grid>
+                        <Grid Grid.Row="3" Margin="0,11,0,0">
+                            <TextBlock x:Name="FileSelectionText" Text="Select an item to inspect it." Foreground="{DynamicResource MutedBrush}" FontFamily="Consolas" FontSize="10" VerticalAlignment="Center"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button x:Name="OpenFileButton" Style="{StaticResource ActionButton}" Content="OPEN" Margin="0,0,7,0"/>
+                                <Button x:Name="CopyPathButton" Style="{StaticResource ActionButton}" Content="COPY PATH" Margin="0,0,7,0"/>
+                                <Button x:Name="NewFolderButton" Style="{StaticResource ActionButton}" Content="NEW FOLDER" Margin="0,0,7,0"/>
+                                <Button x:Name="RenameFileButton" Style="{StaticResource ActionButton}" Content="RENAME" Margin="0,0,7,0"/>
+                                <Button x:Name="RecycleFileButton" Style="{StaticResource ActionButton}" Content="RECYCLE" Foreground="{DynamicResource AccentBrush}"/>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+
+                    <!-- process page -->
+                    <Grid x:Name="ProcessesPage" Visibility="Collapsed">
+                        <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Margin="0,0,0,16">
+                            <StackPanel><TextBlock Text="RUNTIME // 03" Style="{StaticResource Eyebrow}"/><TextBlock Text="Background processes" Style="{StaticResource Heading}" Margin="0,4,0,0"/><TextBlock Text="Inspect active software and stop unresponsive tasks." Foreground="{DynamicResource MutedBrush}" FontSize="12" Margin="0,5,0,0"/></StackPanel>
+                            <TextBox x:Name="ProcessSearchBox" Style="{StaticResource Input}" Width="260" Height="34" HorizontalAlignment="Right" VerticalAlignment="Bottom" ToolTip="Filter processes"/>
+                        </Grid>
+                        <Grid Grid.Row="1" Margin="0,0,0,10">
+                            <StackPanel Orientation="Horizontal">
+                                <Border Style="{StaticResource Panel}" Padding="12,7" Margin="0,0,8,0"><TextBlock x:Name="ProcessSummaryText" Text="0 ACTIVE" FontFamily="Consolas" FontSize="10"/></Border>
+                                <Border Style="{StaticResource Panel}" Padding="12,7"><TextBlock x:Name="ProcessMemoryText" Text="0 B MEMORY" FontFamily="Consolas" FontSize="10"/></Border>
+                            </StackPanel>
+                            <Button x:Name="RefreshProcessesButton" Style="{StaticResource ActionButton}" Content="REFRESH NOW" HorizontalAlignment="Right"/>
+                        </Grid>
+                        <Border Grid.Row="2" Style="{StaticResource Panel}">
+                            <DataGrid x:Name="ProcessGrid" IsReadOnly="True" AlternationCount="2">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="PROCESS" Binding="{Binding Name}" Width="1.7*"/>
+                                    <DataGridTextColumn Header="PID" Binding="{Binding Id}" Width="0.55*"/>
+                                    <DataGridTextColumn Header="CPU" Binding="{Binding CpuPercent, StringFormat={}{0:N1}%}" Width="0.65*"/>
+                                    <DataGridTextColumn Header="MEMORY" Binding="{Binding Memory}" Width="0.85*"/>
+                                    <DataGridTextColumn Header="THREADS" Binding="{Binding Threads}" Width="0.65*"/>
+                                    <DataGridTextColumn Header="STARTED" Binding="{Binding Started}" Width="1.2*"/>
+                                    <DataGridTextColumn Header="DESCRIPTION" Binding="{Binding Description}" Width="1.8*"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Border>
+                        <Grid Grid.Row="3" Margin="0,11,0,0">
+                            <TextBlock x:Name="ProcessSelectionText" Text="Select a process for controls." Foreground="{DynamicResource MutedBrush}" FontFamily="Consolas" FontSize="10" VerticalAlignment="Center"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button x:Name="OpenProcessLocationButton" Style="{StaticResource ActionButton}" Content="OPEN LOCATION" Margin="0,0,7,0"/>
+                                <Button x:Name="EndProcessButton" Style="{StaticResource ActionButton}" Content="END TASK" Foreground="{DynamicResource AccentBrush}"/>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+
+                    <!-- steam page -->
+                    <Grid x:Name="SteamPage" Visibility="Collapsed">
+                        <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Margin="0,0,0,16">
+                            <StackPanel><TextBlock Text="STEAM // 04" Style="{StaticResource Eyebrow}"/><TextBlock Text="Steam storage" Style="{StaticResource Heading}" Margin="0,4,0,0"/><TextBlock x:Name="SteamPathText" Text="Discovering local Steam libraries…" Foreground="{DynamicResource MutedBrush}" FontSize="12" Margin="0,5,0,0"/></StackPanel>
+                            <TextBox x:Name="SteamSearchBox" Style="{StaticResource Input}" Width="260" Height="34" HorizontalAlignment="Right" VerticalAlignment="Bottom" ToolTip="Filter games"/>
+                        </Grid>
+                        <Grid Grid.Row="1" Margin="0,0,0,10">
+                            <StackPanel Orientation="Horizontal">
+                                <Border Style="{StaticResource Panel}" Padding="12,7" Margin="0,0,8,0"><TextBlock x:Name="SteamCountSummary" Text="SCANNING" FontFamily="Consolas" FontSize="10"/></Border>
+                                <Border Style="{StaticResource Panel}" Padding="12,7"><TextBlock x:Name="SteamSizeSummary" Text="CALCULATING STORAGE" FontFamily="Consolas" FontSize="10"/></Border>
+                            </StackPanel>
+                            <Button x:Name="RefreshSteamButton" Style="{StaticResource ActionButton}" Content="RESCAN LIBRARIES" HorizontalAlignment="Right"/>
+                        </Grid>
+                        <Border Grid.Row="2" Style="{StaticResource Panel}">
+                            <DataGrid x:Name="SteamGrid" IsReadOnly="True" AlternationCount="2">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="GAME" Binding="{Binding Name}" Width="2.3*"/>
+                                    <DataGridTextColumn Header="APP ID" Binding="{Binding AppId}" Width="0.8*"/>
+                                    <DataGridTextColumn Header="INSTALL" Binding="{Binding Install}" Width="0.9*"/>
+                                    <DataGridTextColumn Header="DATA" Binding="{Binding Data}" Width="0.9*"/>
+                                    <DataGridTextColumn Header="TOTAL" Binding="{Binding Total}" Width="0.9*"/>
+                                    <DataGridTextColumn Header="LIBRARY" Binding="{Binding Library}" Width="2.2*"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Border>
+                        <Grid Grid.Row="3" Margin="0,11,0,0">
+                            <TextBlock x:Name="SteamSelectionText" Text="Data includes Workshop, shader cache, and compatibility files." Foreground="{DynamicResource MutedBrush}" FontFamily="Consolas" FontSize="10" VerticalAlignment="Center"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button x:Name="OpenSteamGameButton" Style="{StaticResource ActionButton}" Content="OPEN FOLDER" Margin="0,0,7,0"/>
+                                <Button x:Name="LaunchSteamGameButton" Style="{StaticResource AccentButton}" Content="PLAY"/>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Grid>
+
+            <Border Grid.Row="2" Background="#09090C" BorderBrush="#24242B" BorderThickness="0,1,0,0">
+                <Grid Margin="12,0">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Ellipse x:Name="StatusDot" Width="5" Height="5" Fill="{DynamicResource AccentBrush}" Margin="0,0,7,0"/>
+                        <TextBlock x:Name="StatusText" Text="MCP READY" FontFamily="Consolas" FontSize="9" Foreground="{DynamicResource MutedBrush}"/>
+                    </StackPanel>
+                    <TextBlock Text="LOCAL CONTROL // NO TELEMETRY" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Consolas" FontSize="8" Foreground="#50505A"/>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</Window>
