@@ -41,6 +41,15 @@ elseif ($env:USERPROFILE) {
 else {
     (Get-Location).Path
 }
+
+# Some managed or redirected Windows profiles deny enumeration at the profile
+# root. Fall back to the application folder instead of failing startup.
+try {
+    Get-ChildItem -LiteralPath $script:currentPath -Force -ErrorAction Stop | Select-Object -First 1 | Out-Null
+}
+catch {
+    $script:currentPath = $appRoot
+}
 $script:pathHistory = [System.Collections.Generic.List[string]]::new()
 $script:allFiles = @()
 $script:allProcesses = @()

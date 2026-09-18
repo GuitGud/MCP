@@ -13,9 +13,16 @@ The standard interface uses a neon-red-on-black TRON aesthetic. When Steam is fo
 MCP is deliberately zero-install. It uses Windows PowerShell and WPF, which ship with Windows 10 and 11.
 
 1. Download or clone this repository.
-2. Double-click **`Launch-MCP.cmd`**.
+2. If you downloaded a ZIP, right-click it and choose **Extract All**. Do not run MCP from inside the ZIP preview.
+3. Double-click **`Launch-MCP.cmd`** in the extracted folder.
 
 Windows may show a SmartScreen prompt for files downloaded from the internet. Choose **More info → Run anyway** if you trust this repository. MCP does not require administrator access for normal use; protected processes and folders remain protected by Windows.
+
+If the launcher appears to do nothing, run **`Diagnose-MCP.cmd`**. It keeps a console open with the startup result and points to the persistent diagnostic log at:
+
+```text
+%LOCALAPPDATA%\MasterControlProgram\mcp-startup.log
+```
 
 You can also launch it from a terminal:
 
@@ -71,6 +78,7 @@ Games can be opened in Explorer or launched through Steam directly from MCP. Ste
 
 ```text
 Launch-MCP.cmd                  Double-click launcher
+Diagnose-MCP.cmd                Visible startup diagnostics
 MCP.ps1                         Guarded application entry point
 src/App.xaml                    WPF interface and TRON theme
 src/MasterControlProgram.ps1    UI behavior and Windows integration
